@@ -1,4 +1,4 @@
-# 🌙 Enchanted Dreams
+# 🌙 Dream Dairy
 
 A small, mysterious sanctuary for recording dreams. Keep them sealed and
 private, or set them free into the shared archive — where other dreamers
