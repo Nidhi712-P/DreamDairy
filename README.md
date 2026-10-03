@@ -34,7 +34,7 @@ runs from `app.py` using Python's built-in `sqlite3`.
 ## Setup
 
 ```bash
-cd enchanted_dreams
+cd DreamDairy
 
 # (optional but recommended) create a virtual environment
 python3 -m venv venv
@@ -43,7 +43,7 @@ source venv/bin/activate      # on Windows: venv\Scripts\activate
 # install dependencies
 pip install -r requirements.txt
 
-# run the app (creates enchanted_dreams.db automatically on first run)
+# run the app (creates DreamDairy.db automatically on first run)
 python app.py
 ```
 
@@ -52,10 +52,10 @@ Then open **http://127.0.0.1:5000** in your browser.
 ## Project structure
 
 ```
-enchanted_dreams/
+DreamDairy/
 ├── app.py                  # Flask app: routes, auth, chat API, db helpers
 ├── requirements.txt
-├── enchanted_dreams.db     # created automatically on first run
+├── DreamDariy.db     # created automatically on first run
 ├── static/
 │   ├── css/style.css       # the mystery-vibe theme
 │   └── js/main.js          # starfield animation + chat polling
