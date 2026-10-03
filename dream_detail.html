@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ dream['title'] }} — Enchanted Dreams{% endblock %}
+
+{% block content %}
+<article class="dream-detail">
+  <div class="dream-meta">
+    <span>{{ dream['sigil'] }} {{ dream['username'] }}</span>
+    <span>·</span>
+    <span>{{ dream['created_at'] | time_ago }}</span>
+    <span>·</span>
+    <span class="mood-tag">{{ dream['mood'] }}</span>
+    {% if not dream['is_public'] %}
+      <span>·</span>
+      <span class="wax-seal">🕯️ sealed</span>
+    {% endif %}
+  </div>
+  <h1>{{ dream['title'] }}</h1>
+  <div class="dream-body">{{ dream['content'] }}</div>
+
+  {% if is_owner %}
+  <div class="detail-actions">
+    <form method="POST" action="{{ url_for('delete_dream', dream_id=dream['id']) }}" onsubmit="return confirm('Unmake this dream forever?');">
+      <button type="submit" class="btn btn-ghost">Unmake this dream</button>
+    </form>
+  </div>
+  {% endif %}
+</article>
+
+<section class="chat-section">
+  <h2>💬 The Circle</h2>
+  <div class="chat-sub">where fellow dreamers gather to talk about what this might mean</div>
+
+  {% if dream['is_public'] or is_owner %}
+    <div id="chat-window" class="chat-window" data-dream-id="{{ dream['id'] }}" data-last-id="{{ messages[-1]['id'] if messages else 0 }}">
+      {% if not messages %}
+        <div id="chat-empty" class="chat-empty">No whispers yet. Be the first to speak into the circle.</div>
+      {% endif %}
+      {% for m in messages %}
+        <div class="msg">
+          <div class="sigil">{{ m['sigil'] }}</div>
+          <div class="msg-body">
+            <div class="msg-head">
+              <span class="msg-author">{{ m['username'] }}</span>
+              <span class="msg-time">{{ m['created_at'] | time_ago }}</span>
+            </div>
+            <div class="msg-text">{{ m['content'] }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if current_user %}
+      <form id="chat-form" class="chat-form">
+        <input type="text" id="chat-input" placeholder="Share your thoughts on this dream..." maxlength="1000" autocomplete="off" required />
+        <button type="submit" class="btn btn-primary">Speak</button>
+      </form>
+    {% else %}
+      <div class="chat-locked"><a href="{{ url_for('login', next=request.path) }}">Sign in</a> to join the circle and speak.</div>
+    {% endif %}
+  {% else %}
+    <div class="chat-locked">This dream is sealed. Only its dreamer may speak of it.</div>
+  {% endif %}
+</section>
+{% endblock %}

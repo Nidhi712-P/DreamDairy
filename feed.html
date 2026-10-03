@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Enchanted Dreams — The Shared Archive{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="eyebrow">a sanctuary for what visits you in sleep</div>
+  <h1>The Shared Archive</h1>
+  <p>Every dream here was set free by someone who woke and chose not to forget it.</p>
+</section>
+
+<div class="mood-filters">
+  <a href="{{ url_for('feed') }}" class="chip {{ 'active' if not active_mood }}">All</a>
+  {% for m in moods %}
+    <a href="{{ url_for('feed', mood=m) }}" class="chip {{ 'active' if active_mood == m }}">{{ m }}</a>
+  {% endfor %}
+</div>
+
+{% if dreams %}
+<div class="dream-list">
+  {% for dream in dreams %}
+  <a class="dream-card" href="{{ url_for('dream_detail', dream_id=dream['id']) }}">
+    <div class="dream-card-top">
+      <div class="dream-meta">
+        <span>{{ dream['sigil'] }} {{ dream['username'] }}</span>
+        <span>·</span>
+        <span>{{ dream['created_at'] | time_ago }}</span>
+      </div>
+      <span class="mood-tag">{{ dream['mood'] }}</span>
+    </div>
+    <h2 class="dream-title">{{ dream['title'] }}</h2>
+    <p class="dream-excerpt">{{ dream['content'] }}</p>
+    <div class="dream-card-bottom">
+      <span class="thread-count">💬 {{ dream['message_count'] }} whisper{{ '' if dream['message_count'] == 1 else 's' }}</span>
+      <span>read the dream →</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+  <span class="glyph">✦</span>
+  {% if active_mood %}
+    No {{ active_mood|lower }} dreams have surfaced yet.
+  {% else %}
+    The archive is quiet tonight. No dreams have been shared yet — perhaps yours will be the first.
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}
