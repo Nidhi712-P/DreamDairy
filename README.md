@@ -55,7 +55,7 @@ Then open **http://127.0.0.1:5000** in your browser.
 DreamDairy/
 ├── app.py                  # Flask app: routes, auth, chat API, db helpers
 ├── requirements.txt
-├── DreamDariy.db     # created automatically on first run
+├── DreamDairy.db     # created automatically on first run
 ├── static/
 │   ├── css/style.css       # the mystery-vibe theme
 │   └── js/main.js          # starfield animation + chat polling
